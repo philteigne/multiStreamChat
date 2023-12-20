@@ -2,9 +2,9 @@ const fetch = require('node-fetch');
 const { fetchLiveChatURL } = require('./liveStreamDetails');
 const { apiKey, interval } = require('./channelCredentials');
 
-let lastChatID = "";
-
 const intervalMilli = interval * 1000;
+
+let lastChatID = "";
 
 const findNewMessage = (liveChatID) => {
 
@@ -12,10 +12,13 @@ const findNewMessage = (liveChatID) => {
   
   console.log("Polling for new messages...\n");
 
+  //  continuously fetch youtube messages and check for new ones
   setInterval(() => {
     return fetch(googleApiChat)
       .then(response => response.json())
       .then((responseJSON) => {
+
+        // reverse message list order so the newest message is the first element
         const messageArray = responseJSON.items.reverse();
         const mostRecentMessage = messageArray[0].id;
         const chatMessages = [];
@@ -35,11 +38,13 @@ const findNewMessage = (liveChatID) => {
           );
         }
 
+        //  display new messages in console
         for (const message of chatMessages) {
           console.log(`${message.username}: ${message.message}`);
         }
+
         lastChatID = mostRecentMessage;
-        // console.log(chatMessages);
+
         return chatMessages;
       });
   }, intervalMilli);
