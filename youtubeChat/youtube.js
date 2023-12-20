@@ -1,8 +1,10 @@
 const fetch = require('node-fetch');
 const { fetchLiveChatURL } = require('./liveStreamDetails');
-const { apiKey } = require('./channelCredentials');
+const { apiKey, interval } = require('./channelCredentials');
 
 let lastChatID = "";
+
+const intervalMilli = interval * 1000;
 
 const findNewMessage = (liveChatID) => {
 
@@ -40,7 +42,7 @@ const findNewMessage = (liveChatID) => {
         // console.log(chatMessages);
         return chatMessages;
       });
-  }, 4000);
+  }, intervalMilli);
   
 
 };
@@ -51,70 +53,3 @@ const pollMessages = () => {
 };
 
 pollMessages();
-
-//  retrieve users IP through API request
-// const fetchYoutubeChat = function(callback) {
-
-//   fetch(googleApiChat)
-//   request(googleApiChat, (error, response, body) => {
-//     //  error can be set if invalid domain, user is offline, etc.
-//     if (error) {
-//       callback(error, null);
-//       return;
-//     }
-//     // if non-200 status, assume server error
-//     if (response.statusCode !== 200) {
-//       const msg = `Status Code ${response.statusCode} when fetching IP. Response ${body}`;
-//       callback(Error(msg), null);
-//       return;
-//     }
-
-//     const chatObject = JSON.parse(body).items;
-//     callback(error, chatObject);
-//     return;
-    
-//   });
-// };
-
-// const pollMessages = (interval) => {
-//   setInterval(() => {
-
-//     fetchYoutubeChat((error, response) => {
-//       if (error) {
-//         console.log("It didn't work", error);
-//         return;
-//       }
-
-//       const mostRecentMessage = response[response.length - 1].id;
-  
-//       const chatMessages = [];
-  
-//       for (let i = response.length - 1; i >= 0; i--) {
-//         if (response[i].id === lastChatID) {
-//           break;
-//         }
-        
-
-//         chatMessages.unshift(
-//           {
-//             username: response[i].authorDetails.displayName,
-//             timestamp: response[i].snippet.publishedAt,
-//             message: response[i].snippet.displayMessage,
-//             messageID: response[i].id
-//           }
-//         );
-//       }
-
-//       for (const message of chatMessages) {
-//         console.log(`${message.username}: ${message.message}`);
-//       }
-//       lastChatID = mostRecentMessage;
-//       return chatMessages;
-
-//     });
-//   }, interval);
-// };
-
-// fetchLiveChatURL();
-
-// pollMessages(4000);
