@@ -1,17 +1,14 @@
+const { apiKey, channelID } = require('../youtubeAPICredentials');
 // Your Google API key
-const apiKey = 'AIzaSyDCF2eDYRQ3fGUhVCv8SWB-ynBoj1a3H-k';
+// const apiKey;
 
 // Your youtube channel ID
-const channelID = 'UCWp_ljIFQdo2Xps2-9-qXsQ';
+// const channelID
 
 // The interval in seconds that the script should check chat
 const interval = 4;
 
-// Bobby api key AIzaSyBpgbV5m-nRN603xA7Fvx7w4ojSybfj8ZE
-// Bobby channelID UCuO5jo1ALq0dcFAfOcAheVw
-// Phil api key AIzaSyB4Bscl_-RY53Ve3aw0BfKizQ4IVnGY670
-// Phil channelID UC6-UM3McMm-koNJOCtm68WQ
-// Led api key AIzaSyDCF2eDYRQ3fGUhVCv8SWB-ynBoj1a3H-k
-// Led channelID UCWp_ljIFQdo2Xps2-9-qXsQ
+// The total number of comments to pull every time the interval passes
+const totalComments = 50;
 
-module.exports = { apiKey, channelID, interval };
+module.exports = { apiKey, channelID, interval, totalComments };

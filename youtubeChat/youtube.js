@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { fetchLiveChatURL } = require('./liveStreamDetails');
-const { apiKey, interval } = require('./channelCredentials');
+const { apiKey, interval, totalComments } = require('./channelCredentials');
 
 const intervalMilli = interval * 1000;
 
@@ -8,7 +8,7 @@ let lastChatID = "";
 
 const findNewMessage = (liveChatID) => {
 
-  let googleApiChat = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatID}&part=snippet,authorDetails&maxResults=2000&key=${apiKey}`;
+  let googleApiChat = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatID}&part=snippet,authorDetails&maxResults=${totalComments}&key=${apiKey}`;
   
   console.log("Polling for new messages...\n");
 
