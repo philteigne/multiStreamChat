@@ -19,7 +19,11 @@ const findNewMessage = (liveChatID) => {
       .then((responseJSON) => {
 
         // reverse message list order so the newest message is the first element
+        // TODO do not pull messages from prior to the app running
         const messageArray = responseJSON.items.reverse();
+        if (!messageArray) {
+          return;
+        }
         const mostRecentMessage = messageArray[0].id;
         const chatMessages = [];
         
@@ -37,11 +41,12 @@ const findNewMessage = (liveChatID) => {
             }
           );
         }
-
+        console.log("chatMessages");
+        // callback(chatMessages);
         //  display new messages in console
-        for (const message of chatMessages) {
-          console.log(`${message.username}: ${message.message}`);
-        }
+        // for (const message of chatMessages) {
+          // console.log(`${message.username}: ${message.message}`);
+        // }
 
         lastChatID = mostRecentMessage;
 
@@ -52,9 +57,9 @@ const findNewMessage = (liveChatID) => {
 
 };
 
-const pollMessages = () => {
-  return fetchLiveChatURL()
-    .then(findNewMessage);
-};
+// const pollMessages = () => {
+//   return fetchLiveChatURL()
+//     .then(findNewMessage);
+// };
 
-pollMessages();
+module.exports = { findNewMessage };
