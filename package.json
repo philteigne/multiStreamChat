@@ -6,7 +6,8 @@
   "dependencies": {
     "git-filter-repo": "0.0.30",
     "node-fetch": "^2.7.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "tmi.js": "^1.8.5"
   },
   "devDependencies": {},
   "scripts": {
