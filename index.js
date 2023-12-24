@@ -1,34 +1,24 @@
 /* eslint-disable func-style */
-const tmi = require('tmi.js');
-
 const fetch = require('node-fetch');
 
-const { oauthToken } = require('./twitchAPICredentials');
-const { sayMessage } = require('./twitchChat/twitch.js');
+// TWITCH
+const { client, opts } = require('./twitchChat/twitchCredentials.js');
+const { sayMessage } = require('./twitchChat/twitchHelperFunctions.js');
 
-const { fetchLiveChatURL } = require('./youtubeChat/liveStreamDetails');
-const { apiKey, interval, totalComments } = require('./youtubeChat/channelCredentials');
+// YOUTUBE
+const { fetchLiveChatURL } = require('./youtubeChat/youtubeCredentials.js');
+const { findNewMessages } = require('./youtubeChat/youtubeHelperFunctions.js');
 
-const opts = {
-  identity: {
-    username: 'yttbot',
-    password: oauthToken
-  },
-  channels: [
-    'ledfalcon'
-  ]
-};
+// USER CUSTOMIZATION
+const { googleAPIKey, interval, totalComments } = require('./userOptions.js');
 
 
-// Create a client with our options
-const client = new tmi.client(opts);
-
-const intervalMilli = interval * 1000;
+const intervalInMilliseconds = interval * 1000;
 
 let lastChatID = "";
 
-const findNewMessage = (liveChatID) => {
-  let googleApiChat = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatID}&part=snippet,authorDetails&maxResults=${totalComments}&key=${apiKey}`;
+const forwardYTChat = (liveChatID) => {
+  let googleApiChat = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatID}&part=snippet,authorDetails&maxResults=${totalComments}&key=${googleAPIKey}`;
   
   console.log("Polling for new messages...\n");
 
@@ -39,49 +29,34 @@ const findNewMessage = (liveChatID) => {
       .then((responseJSON) => {
 
         // reverse message list order so the newest message is the first element
-        // TODO do not pull messages from prior to the app running
         const messageArray = responseJSON.items.reverse();
-        if (!messageArray) {
+        const mostRecentMessage = messageArray[0].id;
+        
+        //  return to prevent forwarding all historical messages
+        if (lastChatID === '') {
+          lastChatID = mostRecentMessage;
           return;
         }
-        const mostRecentMessage = messageArray[0].id;
-        const chatMessages = [];
         
-        for (const message of messageArray) {
-          if (message.id === lastChatID) {
-            break;
-          }
-          
-          chatMessages.unshift(
-            {
-              username: message.authorDetails.displayName,
-              timestamp: message.snippet.publishedAt,
-              message: message.snippet.displayMessage,
-              messageID: message.id
-            }
-          );
-        }
+        const chatMessages = findNewMessages(messageArray, lastChatID);
 
         sayMessage(opts.channels[0], chatMessages, client);
 
         lastChatID = mostRecentMessage;
 
-        return chatMessages;
+        return;
       });
-  }, intervalMilli);
+  }, intervalInMilliseconds);
   
 
 };
 
-// Register our event handlers (defined below)
-// client.on('message', onMessageHandler);
-client.on('connected', onConnectedHandler);
-
-
 // Called every time the bot connects to Twitch chat
-function onConnectedHandler (addr, port) {
+const onConnectedHandler = (addr, port) => {
   console.log(`* Connected to ${addr}:${port}`);
-}
+};
+
+client.on('connected', onConnectedHandler);
 
 // Connect to Twitch:
 client.connect().catch(console.error);
@@ -89,7 +64,7 @@ client.connect().catch(console.error);
 
 const pollMessages = () => {
   return fetchLiveChatURL()
-    .then(findNewMessage);
+    .then(forwardYTChat);
 };
 
 pollMessages();
