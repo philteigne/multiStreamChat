@@ -1,7 +1,8 @@
 const fetch = require("node-fetch");
-const { apiKey, channelID } = require('./channelCredentials');
 
-const googleApiLiveEvents = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&order=date&type=video&key=${apiKey}`;
+const {  googleAPIKey, youtubeChannelID } = require('../userOptions');
+
+const googleApiLiveEvents = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${youtubeChannelID}&order=date&type=video&key=${googleAPIKey}`;
 
 //  find and return the activeLiveChatId from current live stream
 const parseLiveChatID = (data) => {
@@ -23,7 +24,7 @@ const fetchLiveChatID = (data) => {
 
   const liveVideoID = parseLiveVideoID(data.items);
 
-  const googleApiLiveDetails = `https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails,snippet&id=${liveVideoID}&key=${apiKey}`;
+  const googleApiLiveDetails = `https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails,snippet&id=${liveVideoID}&key=${googleAPIKey}`;
 
   return fetch(googleApiLiveDetails);
 };
