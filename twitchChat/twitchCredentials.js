@@ -13,6 +13,5 @@ const opts = {
 
 // Create a client with our options
 const client = new tmi.client(opts);
-// const client = new tmi.client(opts);
 
 module.exports = { client, opts };
