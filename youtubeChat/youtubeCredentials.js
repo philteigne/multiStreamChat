@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 
-const {  googleAPIKey, youtubeChannelID } = require('../userOptions');
+const googleAPIKey = process.env.GOOGLE_API_KEY;
+const youtubeChannelID = process.env.YOUTUBE_CHANNEL_ID;
 
 const googleApiLiveEvents = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${youtubeChannelID}&order=date&type=video&key=${googleAPIKey}`;
 
