@@ -1,10 +1,10 @@
-const { oauthToken } = require('../twitchAPICredentials');
+const twitchAPIKey = process.env.TWITCH_API_KEY;
 const tmi = require('tmi.js');
 
 const opts = {
   identity: {
     username: 'yttbot',
-    password: oauthToken
+    password: twitchAPIKey
   },
   channels: [
     'ledfalcon'
