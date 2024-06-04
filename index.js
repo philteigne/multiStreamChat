@@ -10,8 +10,9 @@ const { fetchLiveChatURL } = require('./youtubeChat/youtubeCredentials.js');
 const { findNewMessages } = require('./youtubeChat/youtubeHelperFunctions.js');
 
 // USER CUSTOMIZATION
-const { googleAPIKey, interval, totalComments } = require('./userOptions.js');
-
+const googleAPIKey = process.env.GOOGLE_API_KEY
+const interval = process.env.INTERVAL
+const totalComments = process.env.TOTAL_COMMENTS
 
 const intervalInMilliseconds = interval * 1000;
 
