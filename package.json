@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "git-filter-repo": "0.0.30",
     "node-fetch": "^2.7.0",
     "request": "^2.88.2",
