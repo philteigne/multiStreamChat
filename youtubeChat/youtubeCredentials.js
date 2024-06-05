@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fetch = require("node-fetch");
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
@@ -22,7 +24,6 @@ const parseLiveVideoID = (arrOfVideos) => {
 
 //  fetch data from details of active livestream
 const fetchLiveChatID = (data) => {
-
   const liveVideoID = parseLiveVideoID(data.items);
 
   const googleApiLiveDetails = `https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails,snippet&id=${liveVideoID}&key=${googleAPIKey}`;
@@ -35,9 +36,9 @@ const fetchLiveChatID = (data) => {
 const fetchLiveChatURL = () => {
   return fetch(googleApiLiveEvents)
     .then(response => response.json())
-    .then(fetchLiveChatID)
+    .then(data => fetchLiveChatID(data))
     .then(response => response.json())
-    .then(parseLiveChatID);
+    .then(data => parseLiveChatID(data))
 };
 
 module.exports = { fetchLiveChatURL };
