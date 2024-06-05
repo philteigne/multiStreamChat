@@ -1,4 +1,2 @@
 node_modules
-twitchAPICredentials.js
-youtubeAPICredentials.js
-userOptions.js
+.env
