@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 /* eslint-disable func-style */
 const fetch = require('node-fetch');
 
