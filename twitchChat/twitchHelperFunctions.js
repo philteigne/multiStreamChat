@@ -6,7 +6,7 @@ const sayMessage = (target, arrayOfMessages, webSocket) => {
 
     let slowMessages = setInterval(() => {
 
-      webSocket.say(target, `${arrayOfMessages[i].username}: ${arrayOfMessages[i].message}`);
+      webSocket.say(target, `${arrayOfMessages[i].sender.displayName}: ${arrayOfMessages[i].message}`);
       i++;
 
       // Break setInterval when all messages have been sent
