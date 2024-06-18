@@ -1,23 +1,24 @@
 import logo from './logo.svg';
+import React from 'react';
+
+import ChatCredentialsForm from './components/ChatCredentialsForm';
+import ChatDisplay from './components/ChatDisplay';
+
 import './App.css';
 
 function App() {
+
+  const state = {
+    channelCredentials: {
+      youtubeChannelID: "UCKnodHJpZd8UbSvAufDd3_g",
+      twitchChannelID: "ledfalcon",
+      googleAPIKey: "placeholder" 
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ChatDisplay />
+      <ChatCredentialsForm />
     </div>
   );
 }
