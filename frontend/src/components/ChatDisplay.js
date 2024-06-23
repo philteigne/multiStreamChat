@@ -1,9 +1,15 @@
 import React from 'react';
 
-const ChatDisplay = () => {
+const ChatDisplay = ({messages}) => {
   return(
     <React.Fragment>
-      ChatDisplay
+      {messages.map((message) => {
+        return(
+          <li>
+            {message.message}
+          </li>
+        )
+      })}
     </React.Fragment>
   );
 }
