@@ -4,8 +4,7 @@ import {React, useState} from 'react';
 import ChatCredentialsForm from './components/ChatCredentialsForm';
 import ChatDisplay from './components/ChatDisplay';
 
-import { pollMessages } from './helpers/compilers';
-import { buildClient } from './helpers/twitchChat/twitchCredentials';
+import { listenLive } from './helpers/compilers';
 
 import './App.css';
 
@@ -15,6 +14,17 @@ function App() {
   const [googleAPIKey, setGoogleAPIKey] = useState("");
   const [messageCount, setMessageCount] = useState(0);
   const [pullFrequency, setPullFrequency] = useState(5);
+  const [messages, setMessages] = useState([])
+
+  // listenLive = (youtubeChannelID, googleAPIKey, totalComments, interval, messageArray)
+
+  const setMessagesWithHistory = (newMessage) => {
+    setMessages((prevMessages) => {
+      const updatedMessages = [...prevMessages, newMessage];
+      console.log(updatedMessages); // This will log the updated state
+      return updatedMessages;
+    });
+  };
 
   return (
     <div>
@@ -23,12 +33,14 @@ function App() {
           console.log(googleAPIKey)
           console.log(messageCount)
           console.log(pullFrequency)
-          // pollMessages("UCrPseYLGpNygVi34QpGNqpA", googleAPIKey, 5, 5)
+          listenLive(youtubeChannelID, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory)
         }}>
         Start Polling
       </button>
-      <ChatDisplay />
-      <ChatCredentialsForm 
+      <ChatDisplay
+        messages={messages}
+      />
+      <ChatCredentialsForm
         setYoutubeChannelID={setYoutubeChannelID}
         setGoogleAPIKey={setGoogleAPIKey}
         setMessageCount={setMessageCount}
