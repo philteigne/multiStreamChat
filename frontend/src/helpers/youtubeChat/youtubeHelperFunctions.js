@@ -39,5 +39,41 @@ const findNewMessages = (messageArray, lastChatID) => {
   return chatMessages;
 };
 
+const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callback) => {
+  let googleApiChat = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatID}&part=snippet,authorDetails&maxResults=${totalComments}&key=${googleAPIKey}`;
+  let lastChatID = "";
+  
+  console.log("Polling for new messages...\n");
 
-module.exports = { findNewMessages };
+  //  continuously fetch youtube messages and check for new ones
+  setInterval(() => {
+    return fetch(googleApiChat)
+      .then(response => response.json())
+      .then((responseJSON) => {
+
+        // reverse message list order so the newest message is the first element
+        const messageArray = responseJSON.items.reverse();
+        const mostRecentMessage = messageArray[0].id;
+        
+        //  return to prevent forwarding all historical messages
+        if (lastChatID === '') {
+          lastChatID = mostRecentMessage;
+          return;
+        }
+        
+        const chatMessages = findNewMessages(messageArray, lastChatID);
+
+        chatMessages.forEach(message => {
+          console.log(message)
+          callback(message)
+        });
+
+        lastChatID = mostRecentMessage;
+
+        return;
+      });
+  }, interval * 1000);
+  
+};
+
+module.exports = { listenYoutube };
