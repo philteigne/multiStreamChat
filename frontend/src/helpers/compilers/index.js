@@ -9,15 +9,6 @@ const fetch = require('node-fetch');
 const { fetchLiveChatURL } = require('../youtubeChat/youtubeCredentials.js');
 const { findNewMessages } = require('../youtubeChat/youtubeHelperFunctions.js');
 
-// USER CUSTOMIZATION
-// const googleAPIKey = process.env.GOOGLE_API_KEY
-// const interval = process.env.INTERVAL
-// const totalComments = process.env.TOTAL_COMMENTS
-
-// const youtubeChannelID = process.env.YOUTUBE_CHANNEL_ID;
-
-// const intervalInMilliseconds = interval * 1000;
-
 let lastChatID = "";
 
 const forwardYTChat = (liveChatID, totalComments, googleAPIKey, interval) => {
@@ -46,6 +37,7 @@ const forwardYTChat = (liveChatID, totalComments, googleAPIKey, interval) => {
         chatMessages.forEach(message => {
           console.log(`${message.sender.displayName}: ${message.message}`)
         });
+        
         // sayMessage(opts.channels[0], chatMessages, client);
 
         lastChatID = mostRecentMessage;
