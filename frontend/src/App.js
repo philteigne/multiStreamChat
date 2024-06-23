@@ -11,32 +11,29 @@ import './App.css';
 
 function App() {
 
+  const [youtubeChannelID, setYoutubeChannelID] = useState("");
   const [googleAPIKey, setGoogleAPIKey] = useState("");
-
-  const state = {
-    channelCredentials: {
-      youtubeChannelID: "UCrPseYLGpNygVi34QpGNqpA",
-      twitchChannelID: "ledfalcon",
-      googleAPIKey: "placeholder" 
-    }
-  }
+  const [messageCount, setMessageCount] = useState(0);
+  const [pullFrequency, setPullFrequency] = useState(5);
 
   return (
     <div>
-      <form>
-        <input onChange={(e) => {
-          setGoogleAPIKey(e.target.value)
-          console.log(googleAPIKey)
-          }}></input>
-      </form>
       <button onClick={() => {
+          console.log(youtubeChannelID)
           console.log(googleAPIKey)
-          pollMessages("UCrPseYLGpNygVi34QpGNqpA", googleAPIKey, 5, 5)
+          console.log(messageCount)
+          console.log(pullFrequency)
+          // pollMessages("UCrPseYLGpNygVi34QpGNqpA", googleAPIKey, 5, 5)
         }}>
         Start Polling
       </button>
       <ChatDisplay />
-      <ChatCredentialsForm />
+      <ChatCredentialsForm 
+        setYoutubeChannelID={setYoutubeChannelID}
+        setGoogleAPIKey={setGoogleAPIKey}
+        setMessageCount={setMessageCount}
+        setPullFrequency={setPullFrequency}
+      />
     </div>
   );
 }
