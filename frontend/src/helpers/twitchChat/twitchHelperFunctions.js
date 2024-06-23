@@ -1,23 +1,40 @@
 // Loop needs to wait for previous setTimeout to end before starting the next one
-const sayMessage = (target, arrayOfMessages, webSocket) => {
-  if (arrayOfMessages.length > 0) {
+// Called every time the bot connects to Twitch chat
+const tmi = require('tmi.js');
+const {ChatMessage} = require('../constructors/message')
 
-    let i = 0;
 
-    let slowMessages = setInterval(() => {
+const listenTwitch = (channel, callback) => {
+  const opts = {
+    channels: [channel], // [array of channels]
+  };
 
-      console.log(`${arrayOfMessages[i].sender.displayName}: ${arrayOfMessages[i].message}`)
+  const client = new tmi.client(opts)
 
-      webSocket.say(target, `${arrayOfMessages[i].sender.displayName}: ${arrayOfMessages[i].message}`);
-      i++;
+  client.on('connected', (addr, port) => {
+    console.log(`* Connected to ${addr}:${port}`);
+  });
 
-      // Break setInterval when all messages have been sent
-      if (i >= arrayOfMessages.length) {
-        clearInterval(slowMessages);
-      }
+  client.on('message', (channel, user, message, msg) => {
 
-    }, 1501); // Found minimum 1025
-  }
-};
+    const sender = user['display-name']
+    const platform = 'Twitch'
+    const userStatus = user
+    const messageContent = message.snippet.displayMessage
+    const messageID = message.id
+    const timestamp = message.snippet.publishedAt
+    
+    callback(
+      new ChatMessage(
+        platform,
+        sender,
+        userStatus,
+        messageContent,
+        messageID,
+        timestamp,
+      )
+    )
+  });
+}
 
-module.exports = { sayMessage };
+module.exports = { listenTwitch };
