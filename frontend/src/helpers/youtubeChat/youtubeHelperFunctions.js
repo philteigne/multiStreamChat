@@ -12,7 +12,11 @@ const findNewMessages = (messageArray, lastChatID) => {
       break;
     }
 
-    const sender = message.authorDetails
+    const sender = {
+      name: message.authorDetails.displayName,
+      channel: message.authorDetails.channelUrl,
+      avatar: message.authorDetails.profileImageUrl,
+    }
     const platform = 'Youtube'
     const userStatus = {
       isVerified: message.authorDetails.isVerified,

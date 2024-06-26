@@ -17,7 +17,10 @@ const listenTwitch = (channel, callback) => {
 
   client.on('message', (channel, user, message, msg) => {
 
-    const sender = user['display-name']
+    const sender = {
+      name: user['display-name'],
+      channel: `https://www.twitch.tv/${user['display-name']}`,
+    }
     const platform = 'Twitch'
     const userStatus = user
     const messageContent = message
