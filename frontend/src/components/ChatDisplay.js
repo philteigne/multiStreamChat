@@ -6,7 +6,7 @@ const ChatDisplay = ({messages}) => {
       {messages.map((message) => {
         return(
           <li>
-            {message.message}
+            {`${message.timestamp} - ${message.platform} - ${message.sender.name}: ${message.message}`}
           </li>
         )
       })}
