@@ -17,7 +17,13 @@ const listenLive = (youtubeChannelID, googleAPIKey, totalComments, interval, cal
 
   // Listen to Youtube
   return fetchLiveChatURL(youtubeChannelID, googleAPIKey)
-    .then(liveChatID => listenYoutube(liveChatID, totalComments, googleAPIKey, interval, callback));
+    .then(liveChatID => {
+      const stopYoutubeListening = listenYoutube(liveChatID, totalComments, googleAPIKey, interval, callback)
+
+      return {
+        stopYoutubeListening
+      };
+    });
 };
 
 module.exports = { listenLive };

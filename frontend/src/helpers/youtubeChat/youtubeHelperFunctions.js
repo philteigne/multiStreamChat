@@ -46,8 +46,8 @@ const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callba
   console.log("Polling for new messages...\n");
 
   //  continuously fetch youtube messages and check for new ones
-  setInterval(() => {
-    return fetch(googleApiChat)
+  const intervalID = setInterval(() => {
+    fetch(googleApiChat)
       .then(response => response.json())
       .then((responseJSON) => {
 
@@ -68,11 +68,11 @@ const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callba
         });
 
         lastChatID = mostRecentMessage;
-
-        return;
       });
   }, interval * 1000);
-  
+
+  // Return a function that stops the interval
+  return () => clearInterval(intervalID)
 };
 
 module.exports = { listenYoutube };

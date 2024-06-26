@@ -11,10 +11,13 @@ import './App.css';
 function App() {
 
   const [youtubeChannelID, setYoutubeChannelID] = useState("");
+  const [twitchChannelName, setTwitchChannelName] = useState("")
   const [googleAPIKey, setGoogleAPIKey] = useState("");
-  const [messageCount, setMessageCount] = useState(0);
-  const [pullFrequency, setPullFrequency] = useState(5);
+  const [messageCount, setMessageCount] = useState(5);
+  const [pullFrequency, setPullFrequency] = useState(1);
   const [messages, setMessages] = useState([])
+
+  const [stopMessageFn, setStopMessageFn] = useState({ stopYoutubeListening: () => {}, stopTwitchListening: () => {}});
 
   // listenLive = (youtubeChannelID, googleAPIKey, totalComments, interval, messageArray)
 
@@ -34,14 +37,23 @@ function App() {
           console.log(messageCount)
           console.log(pullFrequency)
           listenLive(youtubeChannelID, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory)
+            .then(({ stopYoutubeListening }) => {
+              setStopMessageFn({ stopYoutubeListening })
+            })
         }}>
         Start Polling
+      </button>
+      <button onClick={() => {
+        stopMessageFn.stopYoutubeListening();
+      }}>
+        Stop Polling
       </button>
       <ChatDisplay
         messages={messages}
       />
       <ChatCredentialsForm
         setYoutubeChannelID={setYoutubeChannelID}
+        setTwitchChannelName={setTwitchChannelName}
         setGoogleAPIKey={setGoogleAPIKey}
         setMessageCount={setMessageCount}
         setPullFrequency={setPullFrequency}
