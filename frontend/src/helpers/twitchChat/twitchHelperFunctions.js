@@ -1,7 +1,7 @@
 // Loop needs to wait for previous setTimeout to end before starting the next one
 // Called every time the bot connects to Twitch chat
 const tmi = require('tmi.js');
-const {ChatMessage} = require('../constructors/message')
+const ChatMessage = require('../constructors/message')
 
 
 const listenTwitch = (channel, callback) => {
@@ -20,10 +20,10 @@ const listenTwitch = (channel, callback) => {
     const sender = user['display-name']
     const platform = 'Twitch'
     const userStatus = user
-    const messageContent = message.snippet.displayMessage
-    const messageID = message.id
-    const timestamp = message.snippet.publishedAt
-    
+    const messageContent = message
+    const messageID = user.id
+    const timestamp = Date.now()
+
     callback(
       new ChatMessage(
         platform,
@@ -35,6 +35,8 @@ const listenTwitch = (channel, callback) => {
       )
     )
   });
+
+  client.connect();
 }
 
 module.exports = { listenTwitch };

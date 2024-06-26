@@ -64,7 +64,6 @@ const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callba
         const chatMessages = findNewMessages(messageArray, lastChatID);
 
         chatMessages.forEach(message => {
-          console.log(message)
           callback(message)
         });
 
