@@ -13,15 +13,17 @@ const { listenTwitch } = require('../twitchChat/twitchHelperFunctions.js');
 const listenLive = (youtubeChannelID, googleAPIKey, totalComments, interval, callback) => {
 
   // Listen to Twitch
-  listenTwitch('ledfalcon', callback)
+  const twitchClient = listenTwitch('ledfalcon', callback);
 
   // Listen to Youtube
   return fetchLiveChatURL(youtubeChannelID, googleAPIKey)
     .then(liveChatID => {
-      const stopYoutubeListening = listenYoutube(liveChatID, totalComments, googleAPIKey, interval, callback)
+      const stopYoutubeListening = listenYoutube(liveChatID, totalComments, googleAPIKey, interval, callback);
+      const stopTwitchListening = () => twitchClient.disconnect()
 
       return {
-        stopYoutubeListening
+        stopYoutubeListening,
+        stopTwitchListening,
       };
     });
 };

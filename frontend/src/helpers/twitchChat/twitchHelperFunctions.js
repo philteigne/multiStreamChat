@@ -36,7 +36,14 @@ const listenTwitch = (channel, callback) => {
     )
   });
 
+  client.on('disconnect', (addr, port) => {
+    console.log(`* Disconnected from ${addr}:${port}`)
+  })
+
   client.connect();
+
+  return client;
+
 }
 
 module.exports = { listenTwitch };

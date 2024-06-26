@@ -37,14 +37,15 @@ function App() {
           console.log(messageCount)
           console.log(pullFrequency)
           listenLive(youtubeChannelID, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory)
-            .then(({ stopYoutubeListening }) => {
-              setStopMessageFn({ stopYoutubeListening })
+            .then(({ stopYoutubeListening, stopTwitchListening }) => {
+              setStopMessageFn({ stopYoutubeListening, stopTwitchListening })
             })
         }}>
         Start Polling
       </button>
       <button onClick={() => {
         stopMessageFn.stopYoutubeListening();
+        stopMessageFn.stopTwitchListening();
       }}>
         Stop Polling
       </button>
