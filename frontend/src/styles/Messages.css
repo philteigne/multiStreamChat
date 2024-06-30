@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/Inter-VariableFont.ttf')
+}
+
+.message {
+  font-family: 'inter'
+}
+
+.timestamp {
+  color: lightslategray
+}
+
+.platform {
+
+}
