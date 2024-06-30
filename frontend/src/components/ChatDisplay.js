@@ -1,13 +1,36 @@
 import React from 'react';
+import '../styles/Reset.css';
+import '../styles/Messages.css'
+
+import TwitchLogo from '../assets/images/platform-logos/TwitchLogo';
+import YoutubeLogo from '../assets/images/platform-logos/YoutubeLogo';
 
 const ChatDisplay = ({messages}) => {
   return(
     <React.Fragment>
-      {messages.map((message) => {
+      {messages.map((message, index) => {
+        let date = message.timestamp
+        if (message.platform === 'Youtube') {
+          date = Date.parse(date)
+        };
+        // TODO: Grab user timezone from browser?
+        date = new Date(date);
+        // en-GB for 24hour clock, en-US for AM/PM
+        date = date.toLocaleTimeString("en-GB", {
+          timezone: "UTC",
+        })
+        
         return(
-          <li>
-            {`${message.timestamp} - ${message.platform} - ${message.sender.name}: ${message.message}`}
-          </li>
+          <div key={index} className="message-display">
+            
+            <div className="message-item">
+              <p className="message timestamp">{date}</p>
+              {message.platform === "Youtube" && <YoutubeLogo />}
+              {message.platform === "Twitch" && <TwitchLogo />}
+              <p className="message sender">{message.sender.name}</p>
+              <p className="message content">{message.message}</p>
+            </div>
+          </div>
         )
       })}
     </React.Fragment>
