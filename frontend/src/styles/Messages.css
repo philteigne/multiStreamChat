@@ -12,11 +12,11 @@
   margin: 10px;
 }
 
-
 .message {
   font-family: 'inter';
   font-size: 10pt;
   color: #EFEFF1;
+  overflow-wrap: break-word;
   
 }
 
@@ -29,9 +29,14 @@
   margin: 0 2px;
 }
 
-.content {
-}
-
 .platform {
   margin-right: 10px;
+}
+
+.emote-twitch {
+  vertical-align: middle;
+}
+
+svg {
+  vertical-align: middle;
 }
