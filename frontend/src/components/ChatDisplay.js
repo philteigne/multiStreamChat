@@ -18,15 +18,17 @@ const ChatDisplay = ({messages}) => {
         // en-GB for 24hour clock, en-US for AM/PM
         date = date.toLocaleTimeString("en-GB", {
           timezone: "UTC",
+          hour: "2-digit",
+          minute: "2-digit",
         })
         
-        return(            
+        return(
             <div key={index} className="message-item">
-              <p className="message timestamp">{date}</p>
+              <span className="message timestamp">{date}</span>
               {message.platform === "Youtube" && <YoutubeLogo />}
               {message.platform === "Twitch" && <TwitchLogo />}
-              <p className="message sender">{message.sender.name}</p>
-              <p className="message content">: {message.message}</p>
+              <span className="message sender">{message.sender.name}:</span>
+              <span className="message content">{message.message}</span>    
             </div>
         )
       })}

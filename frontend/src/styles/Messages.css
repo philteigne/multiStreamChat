@@ -1,28 +1,37 @@
 @font-face {
   font-family: 'inter';
-  src: url('../assets/fonts/Inter-VariableFont.ttf')
+  src: url('../assets/fonts/Inter-VariableFont.ttf');
 }
 
 .message-display {
   background-color: #18181b;
+  padding: 10px;
 }
 
 .message-item {
-  display: "flex";
-  
+  margin: 10px;
 }
+
 
 .message {
   font-family: 'inter';
   font-size: 10pt;
   color: #EFEFF1;
+  
 }
 
 .timestamp {
   color: #adadb8;
+  margin: 0 2px 0 0;
+}
 
+.sender {
+  margin: 0 2px;
+}
+
+.content {
 }
 
 .platform {
-
+  margin-right: 10px;
 }
