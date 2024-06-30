@@ -7,7 +7,7 @@ import YoutubeLogo from '../assets/images/platform-logos/YoutubeLogo';
 
 const ChatDisplay = ({messages}) => {
   return(
-    <React.Fragment>
+    <div className="message-display">
       {messages.map((message, index) => {
         let date = message.timestamp
         if (message.platform === 'Youtube') {
@@ -20,20 +20,17 @@ const ChatDisplay = ({messages}) => {
           timezone: "UTC",
         })
         
-        return(
-          <div key={index} className="message-display">
-            
-            <div className="message-item">
+        return(            
+            <div key={index} className="message-item">
               <p className="message timestamp">{date}</p>
               {message.platform === "Youtube" && <YoutubeLogo />}
               {message.platform === "Twitch" && <TwitchLogo />}
               <p className="message sender">{message.sender.name}</p>
-              <p className="message content">{message.message}</p>
+              <p className="message content">: {message.message}</p>
             </div>
-          </div>
         )
       })}
-    </React.Fragment>
+    </div>
   );
 }
 
