@@ -44,6 +44,11 @@ const findNewMessages = (messageArray, lastChatID) => {
 };
 
 const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callback) => {
+  if (!liveChatID) {
+    // error finding livestream'
+    return () => {}
+  }
+
   let googleApiChat = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatID}&part=snippet,authorDetails&maxResults=${totalComments}&key=${googleAPIKey}`;
   let lastChatID = "";
   

@@ -39,6 +39,10 @@ const fetchLiveChatURL = (youtubeChannelID, googleAPIKey) => {
     .then(data => fetchLiveChatID(data, googleAPIKey))
     .then(response => response.json())
     .then(data => parseLiveChatID(data))
+    .catch((err) => {
+      console.log(err.message)
+      return false
+    })
 };
 
 module.exports = { fetchLiveChatURL };
