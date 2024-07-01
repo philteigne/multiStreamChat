@@ -25,30 +25,34 @@ const renderTwitchEmotes = (messageObj) => {
   const renderArr = [];
 
   for (let i = 0; i < message.length; i++) {
+
+    // if index is flagged as an emote
+    if (parsedObj[i]) {
+      renderArr.push(renderStr);
+      renderStr = "";
+
+      const emoteText = message.slice(i, parsedObj[i]['end'] + 1);
+      const emoteID = parsedObj[i]['emoteID'];
+
+      renderArr.push({
+        type: 'emote',
+        content: emoteText,
+        emoteID: emoteID,
+      });
+
+      i = parsedObj[i]['end'];
+      continue;
+    }
+    
+    // if index is not flagged as an emote
     if (!parsedObj[i]) {
       renderStr += message[i];
       continue;
     }
 
-    if (renderStr) {
-      renderArr.push({
-        type: 'message',
-        content: renderStr,
-      })
-      renderStr = "";
-    }
-
-    const emoteText = message.slice(i, parsedObj[i]['end'] + 1)
-    const emoteID = parsedObj[i]['emoteID']
-    renderArr.push({
-      type: 'emote',
-      content: emoteText,
-      emoteID: emoteID,
-    })
-
-    i = parsedObj[i]['end']
   }
-  
+
+  // if there is leftover text, push it now
   if (renderStr) {
     renderArr.push({
       type: 'message',
@@ -56,8 +60,7 @@ const renderTwitchEmotes = (messageObj) => {
     })
     renderStr = "";
   }
-
-  console.log("renderArr", renderArr)
+  
   return renderArr;
 }
 
