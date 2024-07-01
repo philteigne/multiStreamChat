@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import {React, useState} from 'react';
 
 import ChatCredentialsForm from './components/ChatCredentialsForm';
@@ -32,11 +31,7 @@ function App() {
   return (
     <div>
       <button onClick={() => {
-          console.log(youtubeChannelID)
-          console.log(googleAPIKey)
-          console.log(messageCount)
-          console.log(pullFrequency)
-          listenLive(youtubeChannelID, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory)
+          listenLive(youtubeChannelID, twitchChannelName, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory)
             .then(({ stopYoutubeListening, stopTwitchListening }) => {
               setStopMessageFn({ stopYoutubeListening, stopTwitchListening })
             })
