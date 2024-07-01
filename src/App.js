@@ -12,8 +12,8 @@ function App() {
   const [youtubeChannelID, setYoutubeChannelID] = useState("");
   const [twitchChannelName, setTwitchChannelName] = useState("")
   const [googleAPIKey, setGoogleAPIKey] = useState("");
-  const [messageCount, setMessageCount] = useState(5);
-  const [pullFrequency, setPullFrequency] = useState(1);
+  const [messageCount, setMessageCount] = useState(2);
+  const [pullFrequency, setPullFrequency] = useState(10);
   const [messages, setMessages] = useState([])
 
   const [stopMessageFn, setStopMessageFn] = useState({ stopYoutubeListening: () => {}, stopTwitchListening: () => {}});

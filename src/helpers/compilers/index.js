@@ -1,5 +1,4 @@
 /* eslint-disable func-style */
-const fetch = require('node-fetch');
 
 // TWITCH
 // const { buildClient } = require('./twitchChat/twitchCredentials.js');
