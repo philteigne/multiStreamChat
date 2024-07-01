@@ -1,12 +1,16 @@
 import {React} from 'react';
 
-const ChatCredentialsForm = ({setYoutubeChannelID, setGoogleAPIKey, setMessageCount, setPullFrequency}) => {
+const ChatCredentialsForm = ({setYoutubeChannelID, setTwitchChannelName, setGoogleAPIKey, setMessageCount, setPullFrequency}) => {
 
   return(
     <form>
       <label>
         Youtube Channel ID
         <input onChange={(e) => setYoutubeChannelID(e.target.value)}></input>
+      </label>
+      <label>
+        Twitch Channel ID
+        <input onChange={(e) => setTwitchChannelName(e.target.value)}></input>
       </label>
       <label>
         Google API Key
