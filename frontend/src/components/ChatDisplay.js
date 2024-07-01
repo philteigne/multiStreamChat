@@ -38,15 +38,15 @@ const ChatDisplay = ({messages}) => {
               {message.platform === "Twitch" && <TwitchLogo />}
               <span className="message sender" style={{color: chatColor}}>{message.sender.name}:</span>
               <span className="message content">
-                {message.platform === 'Twitch' && renderArr.map((item) => {
-                if (item.type === "emote") {
+                {message.platform === 'Twitch' && renderArr.map((item, index) => {
+                  if (item.type === "emote") {
+                    return (
+                      <img key={index} className="emote-twitch" src={`https://static-cdn.jtvnw.net/emoticons/v2/${item.emoteID}/default/dark/1.0`} alt={item.content} />
+                    )
+                  }
                   return (
-                    <img className="emote-twitch" src={`https://static-cdn.jtvnw.net/emoticons/v2/${item.emoteID}/default/dark/1.0`} alt={item.content} />
+                    <span key={index}>{item.content}</span>
                   )
-                }
-                return (
-                  <span>{item.content}</span>
-                )
                 })}
               </span>    
             </div>
