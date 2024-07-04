@@ -48,6 +48,7 @@ const ChatDisplay = ({messages}) => {
                     <span key={index}>{item.content}</span>
                   )
                 })}
+                {message.platform === "Youtube" && message.message}
               </span>    
             </div>
         )
