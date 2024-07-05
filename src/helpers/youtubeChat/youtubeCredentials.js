@@ -2,7 +2,7 @@
 const fetch = require("node-fetch");
 
 const findLiveEvents = (youtubeChannelID, googleAPIKey) => {
-  const googleApiLiveEvents = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${youtubeChannelID}&order=date&type=video&key=${googleAPIKey}`;
+  const googleApiLiveEvents = `https://www.googleapis.com/youtube/v3/search?part=snippet&eventType=live&channelId=${youtubeChannelID}&order=date&type=video&key=${googleAPIKey}`;
   return googleApiLiveEvents;
 }
 
