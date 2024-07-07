@@ -2,6 +2,7 @@ import {React, useState} from 'react';
 
 import ChatCredentialsForm from './components/ChatCredentialsForm';
 import ChatDisplay from './components/ChatDisplay';
+import PullData from './components/PullData';
 
 import { listenLive } from './helpers/compilers';
 
@@ -9,11 +10,14 @@ import './App.css';
 
 function App() {
 
-  const [youtubeChannelID, setYoutubeChannelID] = useState("");
-  const [twitchChannelName, setTwitchChannelName] = useState("")
+  const [messageData, setMessageData] = useState({})
+
+  const [youtubeChannelID, setYoutubeChannelID] = useState("UCifCesg-EUkjKyQedaB3hRg");
+  const [twitchChannelName, setTwitchChannelName] = useState("ledfalcon")
   const [googleAPIKey, setGoogleAPIKey] = useState("");
-  const [messageCount, setMessageCount] = useState(2);
-  const [pullFrequency, setPullFrequency] = useState(10);
+
+  const [messageCount, setMessageCount] = useState(2000);
+  const [pullFrequency, setPullFrequency] = useState(2);
   const [messages, setMessages] = useState([])
 
   const [stopMessageFn, setStopMessageFn] = useState({ stopYoutubeListening: () => {}, stopTwitchListening: () => {}});
@@ -23,7 +27,7 @@ function App() {
   const setMessagesWithHistory = (newMessage) => {
     setMessages((prevMessages) => {
       const updatedMessages = [...prevMessages, newMessage];
-      console.log(updatedMessages); // This will log the updated state
+      // console.log(updatedMessages); // This will log the updated state
       return updatedMessages;
     });
   };
@@ -31,7 +35,7 @@ function App() {
   return (
     <div>
       <button onClick={() => {
-          listenLive(youtubeChannelID, twitchChannelName, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory)
+          listenLive(youtubeChannelID, twitchChannelName, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory, setMessageData)
             .then(({ stopYoutubeListening, stopTwitchListening }) => {
               setStopMessageFn({ stopYoutubeListening, stopTwitchListening })
             })
@@ -54,6 +58,7 @@ function App() {
         setMessageCount={setMessageCount}
         setPullFrequency={setPullFrequency}
       />
+      <PullData messageData={messageData} />
     </div>
   );
 }
