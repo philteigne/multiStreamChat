@@ -43,7 +43,7 @@ const findNewMessages = (messageArray, lastChatID) => {
   return chatMessages;
 };
 
-const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callback) => {
+const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callback, dataCallback) => {
   if (!liveChatID) {
     // error finding livestream'
     return () => {}
@@ -54,15 +54,21 @@ const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callba
   
   console.log("Polling for new messages...\n");
 
+  let totalRequestCount = 0
+  let totalPullCount = 0;
+  let totalMessageCount = 0;
+
   //  continuously fetch youtube messages and check for new ones
   const intervalID = setInterval(() => {
+    console.log("Checking for messages...")
     fetch(googleApiChat)
       .then(response => response.json())
       .then((responseJSON) => {
-
         // reverse message list order so the newest message is the first element
         const messageArray = responseJSON.items.reverse();
         const mostRecentMessage = messageArray[0].id;
+        // console.log("messageArray", messageArray)
+        // console.log("mostRecentMessage", mostRecentMessage)
         
         //  return to prevent forwarding all historical messages
         if (lastChatID === '') {
@@ -73,11 +79,28 @@ const listenYoutube = (liveChatID, totalComments, googleAPIKey, interval, callba
         const chatMessages = findNewMessages(messageArray, lastChatID);
 
         chatMessages.forEach(message => {
+          console.log("message", message)
           callback(message)
+
         });
 
         lastChatID = mostRecentMessage;
-      });
+
+        totalRequestCount += 2000
+        totalPullCount += messageArray.length
+        totalMessageCount += chatMessages.length
+        
+        dataCallback({
+          totalRequestCount,
+          totalPullCount,
+          totalMessageCount,
+        })
+
+      })
+      .catch(err => {
+        console.log(err.message)
+        clearInterval(intervalID)
+      })
   }, interval * 1000);
 
   // Return a function that stops the interval

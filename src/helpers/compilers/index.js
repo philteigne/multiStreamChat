@@ -9,7 +9,7 @@ const { fetchLiveChatURL } = require('../youtubeChat/youtubeCredentials.js');
 const { listenYoutube } = require('../youtubeChat/youtubeHelperFunctions.js');
 const { listenTwitch } = require('../twitchChat/twitchHelperFunctions.js');
 
-const listenLive = (youtubeChannelID, twitchChannel, googleAPIKey, totalComments, interval, callback) => {
+const listenLive = (youtubeChannelID, twitchChannel, googleAPIKey, totalComments, interval, callback, dataCallback) => {
 
   // Listen to Twitch
   const twitchClient = listenTwitch(twitchChannel, callback);
@@ -27,7 +27,7 @@ const listenLive = (youtubeChannelID, twitchChannel, googleAPIKey, totalComments
   // Listen to Youtube
   return fetchLiveChatURL(youtubeChannelID, googleAPIKey)
     .then(liveChatID => {
-      const stopYoutubeListening = listenYoutube(liveChatID, totalComments, googleAPIKey, interval, callback);
+      const stopYoutubeListening = listenYoutube(liveChatID, totalComments, googleAPIKey, interval, callback, dataCallback);
 
       return {
         stopYoutubeListening,
