@@ -75,6 +75,7 @@ h1 {
   font-weight: bold;
   font-style: italic;
   font-size: 24pt;
+  color: #1f1f23;
 }
 
 form {
@@ -130,10 +131,9 @@ input {
 
 .button-inverse {
   background-color: #EFEFF1;
-  padding: 0px 10px;
+  padding: 0px 15px;
   align-content: center;
   width: max-content;
-  height: auto;
   overflow: hidden;
   border-radius: 5px;
 }
