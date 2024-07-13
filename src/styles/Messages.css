@@ -4,8 +4,10 @@
 }
 
 .message-display {
-  background-color: #18181b;
+  background-color: #1f1f23;
   padding: 10px;
+  height: inherit;
+  overflow-y: scroll;
 }
 
 .message-item {
