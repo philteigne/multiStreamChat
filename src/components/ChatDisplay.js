@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from "react";
 import '../styles/Reset.css';
 import '../styles/Messages.css'
 
@@ -8,6 +8,16 @@ import YoutubeLogo from '../assets/images/platform-logos/YoutubeLogo';
 import { renderTwitchEmotes } from '../helpers/twitchChat/twitchEmotes';
 
 const ChatDisplay = ({messages}) => {
+
+  // AUTO SCROLL TO BOTTOM
+  const messagesEndRef = useRef(null)
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+    }
+  }, [messages]);
+  
   return(
     <div className="message-display">
       {messages.map((message, index) => {
@@ -24,9 +34,9 @@ const ChatDisplay = ({messages}) => {
           minute: "2-digit",
         })
 
-        let renderArr = [];
+        let messageRenderArr = [];
         if (message.platform === 'Twitch') {
-          renderArr = renderTwitchEmotes(message)
+          messageRenderArr = renderTwitchEmotes(message)
         }
 
         const chatColor = message.userStatus.color ? message.userStatus.color : '#EFEFF1';
@@ -35,10 +45,10 @@ const ChatDisplay = ({messages}) => {
             <div key={index} className="message-item">
               <span className="message timestamp">{date}</span>
               {message.platform === "Youtube" && <YoutubeLogo />}
-              {message.platform === "Twitch" && <TwitchLogo />}
+              {message.platform === "Twitch" && <TwitchLogo /> }
               <span className="message sender" style={{color: chatColor}}>{message.sender.name}:</span>
               <span className="message content">
-                {message.platform === 'Twitch' && renderArr.map((item, index) => {
+                {message.platform === 'Twitch' && messageRenderArr.map((item, index) => {
                   if (item.type === "emote") {
                     return (
                       <img key={index} className="emote-twitch" src={`https://static-cdn.jtvnw.net/emoticons/v2/${item.emoteID}/default/dark/1.0`} alt={item.content} />
@@ -49,7 +59,8 @@ const ChatDisplay = ({messages}) => {
                   )
                 })}
                 {message.platform === "Youtube" && message.message}
-              </span>    
+              </span>
+              <div ref={messagesEndRef} />   
             </div>
         )
       })}
