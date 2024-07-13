@@ -1,29 +1,32 @@
 import {React} from 'react';
 
-const ChatCredentialsForm = ({setYoutubeChannelID, setTwitchChannelName, setGoogleAPIKey, setMessageCount, setPullFrequency}) => {
+const ChatCredentialsForm = ({setYoutubeChannelID, setTwitchChannelName, setGoogleAPIKey, handleSubmit}) => {
 
   return(
     <form>
-      <label>
-        Youtube Channel ID
+      <span className='form-input'>
+        <label>
+          YOUTUBE CHANNEL ID
+        </label>
         <input onChange={(e) => setYoutubeChannelID(e.target.value)}></input>
-      </label>
-      <label>
-        Twitch Channel ID
+      </span>
+      <span className='form-input'>
+        <label>
+          TWITCH CHANNEL ID
+        </label>
         <input onChange={(e) => setTwitchChannelName(e.target.value)}></input>
-      </label>
-      <label>
-        Google API Key
+      </span>
+      <span className='form-input'>
+        <label>
+          GOOGLE API KEY
+        </label>
         <input onChange={(e) => setGoogleAPIKey(e.target.value)} type="password"></input>
-      </label>
-      <label>
-        Number of Messages
-        <input onChange={(e) => setMessageCount(e.target.value)}></input>
-      </label>
-      <label>
-        Pull Frequency (Seconds)
-        <input onChange={(e) => setPullFrequency(e.target.value)}></input>
-      </label>
+      </span>
+      <button className='form-button' onClick={() => {
+          handleSubmit()
+        }}>
+        COMBINE
+      </button>
     </form>
   );
 }
