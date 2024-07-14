@@ -2,63 +2,72 @@ import {React, useState} from 'react';
 
 import ChatCredentialsForm from './components/ChatCredentialsForm';
 import ChatDisplay from './components/ChatDisplay';
-import PullData from './components/PullData';
+
+import CloseIcon from './assets/images/CloseIcon';
 
 import { listenLive } from './helpers/compilers';
 
-import './App.css';
+import './styles/App.css';
 
 function App() {
 
+  const [appView, setAppView] = useState("Form") // Form or Chat
+
   const [messageData, setMessageData] = useState({})
 
-  const [youtubeChannelID, setYoutubeChannelID] = useState("UCifCesg-EUkjKyQedaB3hRg");
-  const [twitchChannelName, setTwitchChannelName] = useState("ledfalcon")
+  const [youtubeChannelID, setYoutubeChannelID] = useState("");
+  const [twitchChannelName, setTwitchChannelName] = useState("")
   const [googleAPIKey, setGoogleAPIKey] = useState("");
-
-  const [messageCount, setMessageCount] = useState(2000);
-  const [pullFrequency, setPullFrequency] = useState(2);
+  const [messageCount, setMessageCount] = useState(500);
+  const [pullFrequency, setPullFrequency] = useState(1);
+  
   const [messages, setMessages] = useState([])
 
   const [stopMessageFn, setStopMessageFn] = useState({ stopYoutubeListening: () => {}, stopTwitchListening: () => {}});
 
-  // listenLive = (youtubeChannelID, googleAPIKey, totalComments, interval, messageArray)
+  const handleSubmit = () => {
+    setAppView("Chat")
+    listenLive(youtubeChannelID, twitchChannelName, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory, setMessageData)
+      .then(({ stopYoutubeListening, stopTwitchListening }) => {
+        setStopMessageFn({ stopYoutubeListening, stopTwitchListening })
+      })
+  }
 
   const setMessagesWithHistory = (newMessage) => {
     setMessages((prevMessages) => {
       const updatedMessages = [...prevMessages, newMessage];
-      // console.log(updatedMessages); // This will log the updated state
       return updatedMessages;
     });
   };
 
   return (
-    <div>
-      <button onClick={() => {
-          listenLive(youtubeChannelID, twitchChannelName, googleAPIKey, messageCount, pullFrequency, setMessagesWithHistory, setMessageData)
-            .then(({ stopYoutubeListening, stopTwitchListening }) => {
-              setStopMessageFn({ stopYoutubeListening, stopTwitchListening })
-            })
+    <div className='app'>
+      <nav>
+        <div className='button-inverse'>
+          <h1>MULTi</h1>
+        </div>
+        <button className='nav-button' onClick={() => {
+          setAppView("Form")
+          stopMessageFn.stopYoutubeListening();
+          stopMessageFn.stopTwitchListening();
         }}>
-        Start Polling
-      </button>
-      <button onClick={() => {
-        stopMessageFn.stopYoutubeListening();
-        stopMessageFn.stopTwitchListening();
-      }}>
-        Stop Polling
-      </button>
-      <ChatDisplay
-        messages={messages}
-      />
-      <ChatCredentialsForm
-        setYoutubeChannelID={setYoutubeChannelID}
-        setTwitchChannelName={setTwitchChannelName}
-        setGoogleAPIKey={setGoogleAPIKey}
-        setMessageCount={setMessageCount}
-        setPullFrequency={setPullFrequency}
-      />
-      <PullData messageData={messageData} />
+          <CloseIcon />
+        </button>
+      </nav>
+      {(appView === "Chat") &&
+        <ChatDisplay
+          messages={messages}
+        />}
+      {(appView === "Form") &&
+        <ChatCredentialsForm
+          youtubeChannelID={youtubeChannelID}
+          setYoutubeChannelID={setYoutubeChannelID}
+          twitchChannelName={twitchChannelName}
+          setTwitchChannelName={setTwitchChannelName}
+          googleAPIKey={googleAPIKey}
+          setGoogleAPIKey={setGoogleAPIKey}
+          handleSubmit={handleSubmit}
+        />}
     </div>
   );
 }
