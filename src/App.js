@@ -18,8 +18,8 @@ function App() {
   const [youtubeChannelID, setYoutubeChannelID] = useState("");
   const [twitchChannelName, setTwitchChannelName] = useState("")
   const [googleAPIKey, setGoogleAPIKey] = useState("");
-  const [messageCount, setMessageCount] = useState(500);
-  const [pullFrequency, setPullFrequency] = useState(1);
+  const messageCount = 500;
+  const pullFrequency = 1;
   
   const [messages, setMessages] = useState([])
 
