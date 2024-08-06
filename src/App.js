@@ -43,9 +43,11 @@ function App() {
   return (
     <div className='app'>
       <nav>
-        <div className='button-inverse'>
-          <h1>MULTi</h1>
-        </div>
+        <a href="https://github.com/philteigne/multiStreamChat" target="_blank">
+          <div className='button-inverse'>
+            <h1>MULTi</h1>
+          </div>
+        </a>
         <button className='nav-button' onClick={() => {
           setAppView("Form")
           stopMessageFn.stopYoutubeListening();
