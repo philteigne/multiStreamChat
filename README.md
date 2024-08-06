@@ -6,6 +6,7 @@ MULTi is a  lightweight web app that can easily merge Youtube and Twitch livestr
 ## Input Setup
 
 The following contains instructions on how to get the values needed for each of the form inputs.
+**Important:** The tool requires your Youtube livestream to be live prior to listening. If the tool was run before you were live simply close and restart the tool.
 
 ### Youtube Channel ID
 Youtube Channel IDs are publicly available, but can sometimes be tricky to find.
