@@ -72,6 +72,14 @@ button:hover {
   cursor: pointer;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
 h1 {
   font-family: 'Kanit';
   font-weight: bold;
