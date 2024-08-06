@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# MULTi
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Summary
+MULTi is a  lightweight web app that can easily merge Youtube and Twitch livestream chats. When provided with a Youtube Channel ID, Twitch Channel ID, and a Google API Key multi will monitor the provided live streams for messages and display them together in one interface designed similarly to the Twitch chat interface.
 
-## Available Scripts
+## Input Setup
 
-In the project directory, you can run:
+The following contains instructions on how to get the values needed for each of the form inputs.
 
-### `npm start`
+### Youtube Channel ID
+Youtube Channel IDs are publicly available, but can sometimes be tricky to find.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Option 1:**
+Log in to your Youtube channel and click on your avatar in the top right of the screen. Click on Settings > Advanced Settings, then you can copy the value listed as Channel ID.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Option 2:**
+Go to any video or livestream from the desired Youtube channel. Right click on the page background and click on "View Page Source" (or press Ctrl+U). On the page that opens press Ctrl+F and search the page for "channelid" and copy the value between the quotations associated with the listed channelId. eg.
+"channelId":"ThisIsTheChannelIDValue".
 
-### `npm test`
+### Twitch Channel ID
+Twitch Channel IDs are also publicly available and are very easy to find. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The Twitch channel ID value is found in the URL for the target channel. eg. twitch.tv/ThisIsTheChannelIDValue
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Google API Key
+Google API Keys are private and requires some setup. In order to listen to Youtube livestream chats this app uses the Youtube Data API v3. This API is free to use but has a restricted amount of requests per day. In my testing the alloted bandwidth is enough to monitor most 4 - 6 hour daily streams.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Log in to your desired google account.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Head over to https://console.cloud.google.com/apis/library. You may be prompted to enter some information and agree to google's Terms of Service.
 
-### `npm run eject`
+3. Near the top of your screen, click on the "Select a project" dropdown. This should open a modal that lists your current projects. At the top right of this modal click on "NEW PROJECT". ![Step 3a](./src/assets/images/README-images/GoogleAPI-SelectProject.png)
+![Step 3b](./src/assets/images/README-images/GoogleAPI-NewProject.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. The Project Name can be set to whatever you'd like but I would suggest naming it MULTi so it is easy to keep track of. The location can be left as "No organization". ![Step 4](./src/assets/images/README-images/GoogleAPI-CreateProject.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. Click on "CREATE". It may take a few seconds but you should see a notification that your project has been created. ![Step 5](./src/assets/images/README-images/GoogleAPI-ProjectCreated.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+6. In the search bar, type in "YouTube Data API v3", hit enter, and select the result. ![Step 6](./src/assets/images/README-images/GoogleAPI-SelectAPI.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+7. You will be prompted to "Select a recent project", here you can select the MULTi project you just created. ![Step 7](./src/assets/images/README-images/GoogleAPI-AssignAPIProject.png)
 
-## Learn More
+8. Click the "ENABLE" button, wait a few seconds and you will be redirected to an API/Service Details page. ![Step 8](./src/assets/images/README-images/GoogleAPI-EnableAPI.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+9. You should now see a prompt to "CREATE CREDENTIALS". Click on this button. ![Step 9](./src/assets/images/README-images/GoogleAPI-CreateCredentials.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+***IMPORTANT***: The API key you are about to view should be kept private. If you are sharing your screen this window should not be visible.
 
-### Code Splitting
+10. When prompted with: *What data will you be accessing?*, select "Public data" and click next. This will generate the API Key needed for MULTi. I recommend storing this key somewhere safe but easily accessible either in a saved document or a password manager. 
+![Step 10](./src/assets/images/README-images/GoogleAPI-CredentialType.png)
+11. Click on "DONE". You can now exit the page.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### FAQs
+In order to keep your Google API Key private MULTi currently does not store any of the data that you input. Accounts and settings may be added in the future but for now the Channel and API Keys will need to be entered any time you reload the app. 
